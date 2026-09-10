@@ -1,2 +1,15 @@
 import { Link } from "react-router-dom";
-export default function NotFound(){return <main className="page center-page"><div><small>404</small><h1>Frame not found.</h1><p>The page you're looking for has moved outside the gallery.</p><Link className="btn primary" to="/">Return home</Link></div></main>}
+export default function NotFound() {
+  return (
+    <main className="page center-page">
+      <div>
+        <small>404</small>
+        <h1>Frame not found.</h1>
+        <p>The page you're looking for has moved outside the gallery.</p>
+        <Link className="btn primary" to="/">
+          Return home
+        </Link>
+      </div>
+    </main>
+  );
+}
