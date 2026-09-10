@@ -3,10 +3,10 @@ export default function About() {
   return (
     <main className="page about">
       <div className="about-hero">
-        <small>ABOUT BHARATLENS</small>
+        <small>ABOUT Bharat Ki Jhalak</small>
         <h1>India, seen through a different lens.</h1>
         <p>
-          BHARATLENS is a portfolio-ready React gallery concept combining Indian
+          Bharat Ki Jhalak is a portfolio-ready React gallery concept combining Indian
           visual culture with a dark, futuristic SaaS interface.
         </p>
       </div>
