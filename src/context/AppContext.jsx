@@ -5,10 +5,10 @@ import { readStore, writeStore } from "../utils/storage";
 const AppContext = createContext(null);
 
 const KEYS = {
-  favorites: "bharatlens_favorites",
-  liked: "bharatlens_liked",
-  collections: "bharatlens_collections",
-  view: "bharatlens_view",
+  favorites: "Bharat Ki Jhalak_favorites",
+  liked: "Bharat Ki Jhalak_liked",
+  collections: "Bharat Ki Jhalak_collections",
+  view: "Bharat Ki Jhalak_view",
 };
 
 export function AppProvider({ children }) {
