@@ -3,5 +3,5 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === "serve" ? "/" : "/MyPortfolio/",
+  base: command === "serve" ? "/" : "/Bharat Ki Jhalak/",
 }));
