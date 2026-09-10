@@ -1,10 +1,4 @@
-import {
-  ArrowRight,
-  Flame,
-  MapPin,
-  Search,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Flame, MapPin, Search, Sparkles } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -119,7 +113,6 @@ export default function Home({ onOpen, onShare, onCollect }) {
           </div>
         </div>
 
-      
         <div className="hero-art">
           {heroPhotos.map((photo, index) => (
             <motion.img
@@ -173,9 +166,7 @@ export default function Home({ onOpen, onShare, onCollect }) {
               onClick={() => handleTrendClick(trend)}
               aria-label={`Explore ${trend}`}
             >
-              <span>
-                {String(index + 1).padStart(2, "0")}
-              </span>
+              <span>{String(index + 1).padStart(2, "0")}</span>
 
               <b>{trend}</b>
 
@@ -208,9 +199,7 @@ export default function Home({ onOpen, onShare, onCollect }) {
             >
               <span>{collection}</span>
 
-              <small>
-                CURATED {String(index + 1).padStart(2, "0")}
-              </small>
+              <small>CURATED {String(index + 1).padStart(2, "0")}</small>
             </button>
           ))}
         </div>
@@ -225,10 +214,8 @@ export default function Home({ onOpen, onShare, onCollect }) {
           </div>
         </div>
 
-       
         {loading && <Skeletons count={6} />}
 
-       
         {!loading && featured.length > 0 && (
           <div className="gallery-grid masonry">
             {featured.map((photo) => (
@@ -243,7 +230,6 @@ export default function Home({ onOpen, onShare, onCollect }) {
           </div>
         )}
 
-      
         {!loading && featured.length === 0 && (
           <EmptyState
             title="No photos yet"
@@ -254,4 +240,3 @@ export default function Home({ onOpen, onShare, onCollect }) {
     </main>
   );
 }
-
