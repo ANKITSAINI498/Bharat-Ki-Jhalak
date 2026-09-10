@@ -48,7 +48,7 @@ export function AppProvider({ children }) {
       setNotice("");
     } catch {
       try {
-        const response = await fetch("/data/photos.json");
+        const response = await fetch(`${import.meta.env.BASE_URL}data/photos.json`);
         if (!response.ok) throw new Error("Fallback unavailable");
         const data = await response.json();
         setPhotos(data.photos || []);
