@@ -8,15 +8,21 @@ const KEYS = {
   favorites: "bharatlens_favorites",
   liked: "bharatlens_liked",
   collections: "bharatlens_collections",
-  view: "bharatlens_view"
+  view: "bharatlens_view",
 };
 
 export function AppProvider({ children }) {
   const [photos, setPhotos] = useState([]);
-  const [favorites, setFavorites] = useState(() => readStore(KEYS.favorites, []));
+  const [favorites, setFavorites] = useState(() =>
+    readStore(KEYS.favorites, []),
+  );
   const [liked, setLiked] = useState(() => readStore(KEYS.liked, []));
-  const [collections, setCollections] = useState(() => readStore(KEYS.collections, []));
-  const [viewMode, setViewMode] = useState(() => readStore(KEYS.view, "masonry"));
+  const [collections, setCollections] = useState(() =>
+    readStore(KEYS.collections, []),
+  );
+  const [viewMode, setViewMode] = useState(() =>
+    readStore(KEYS.view, "masonry"),
+  );
   const [loading, setLoading] = useState(true);
   const [notice, setNotice] = useState("");
   const [hasLiveApi, setHasLiveApi] = useState(false);
@@ -31,7 +37,11 @@ export function AppProvider({ children }) {
   const loadInitial = async () => {
     setLoading(true);
     try {
-      const live = await fetchPhotos({ page: 1, perPage: 24, query: "India photography" });
+      const live = await fetchPhotos({
+        page: 1,
+        perPage: 24,
+        query: "India photography",
+      });
       if (!live.photos.length) throw new Error("Empty live response");
       setPhotos(live.photos);
       setHasLiveApi(true);
@@ -53,41 +63,100 @@ export function AppProvider({ children }) {
     }
   };
 
-  useEffect(() => { loadInitial(); }, []);
+  useEffect(() => {
+    loadInitial();
+  }, []);
 
   const toggleFavorite = (id) =>
-    setFavorites(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    );
 
   const toggleLike = (id) => {
-    setLiked(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
-    setPhotos(prev => prev.map(p => p.id === id ? { ...p, likes: Math.max(0, p.likes + (liked.includes(id) ? -1 : 1)) } : p));
+    setLiked((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
+    );
+    setPhotos((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              likes: Math.max(0, p.likes + (liked.includes(id) ? -1 : 1)),
+            }
+          : p,
+      ),
+    );
   };
 
   const createCollection = (name) => {
     const clean = name.trim();
     if (!clean) return false;
-    setCollections(prev => [...prev, { id: crypto.randomUUID(), name: clean, photoIds: [], createdAt: Date.now() }]);
+    setCollections((prev) => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        name: clean,
+        photoIds: [],
+        createdAt: Date.now(),
+      },
+    ]);
     return true;
   };
 
   const addToCollection = (collectionId, photoId) => {
-    setCollections(prev => prev.map(c => c.id === collectionId && !c.photoIds.includes(photoId)
-      ? { ...c, photoIds: [...c.photoIds, photoId] } : c));
+    setCollections((prev) =>
+      prev.map((c) =>
+        c.id === collectionId && !c.photoIds.includes(photoId)
+          ? { ...c, photoIds: [...c.photoIds, photoId] }
+          : c,
+      ),
+    );
   };
 
   const removeFromCollection = (collectionId, photoId) => {
-    setCollections(prev => prev.map(c => c.id === collectionId
-      ? { ...c, photoIds: c.photoIds.filter(id => id !== photoId) } : c));
+    setCollections((prev) =>
+      prev.map((c) =>
+        c.id === collectionId
+          ? { ...c, photoIds: c.photoIds.filter((id) => id !== photoId) }
+          : c,
+      ),
+    );
   };
 
   const deleteCollection = (collectionId) =>
-    setCollections(prev => prev.filter(c => c.id !== collectionId));
+    setCollections((prev) => prev.filter((c) => c.id !== collectionId));
 
-  const value = useMemo(() => ({
-    photos, setPhotos, favorites, liked, collections, viewMode, setViewMode,
-    loading, notice, hasLiveApi, reload: loadInitial, toggleFavorite, toggleLike,
-    createCollection, addToCollection, removeFromCollection, deleteCollection
-  }), [photos, favorites, liked, collections, viewMode, loading, notice, hasLiveApi]);
+  const value = useMemo(
+    () => ({
+      photos,
+      setPhotos,
+      favorites,
+      liked,
+      collections,
+      viewMode,
+      setViewMode,
+      loading,
+      notice,
+      hasLiveApi,
+      reload: loadInitial,
+      toggleFavorite,
+      toggleLike,
+      createCollection,
+      addToCollection,
+      removeFromCollection,
+      deleteCollection,
+    }),
+    [
+      photos,
+      favorites,
+      liked,
+      collections,
+      viewMode,
+      loading,
+      notice,
+      hasLiveApi,
+    ],
+  );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
